@@ -1,0 +1,32 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Se ejecutará cuando haya cambios en la rama principal
+  pull_request:
+    branches:
+      - main  # También en cada PR hacia main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usa un entorno de Ubuntu para la ejecución
+
+    steps:
+      - name: 🛠️ Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: 🔍 Ejecutar pruebas
+        run: npm test
+
+      - name: 🚀 Desplegar en producción (Ejemplo)
+        if: github.ref == 'refs/heads/main'
+        run: echo "Desplegando aplicación..."
